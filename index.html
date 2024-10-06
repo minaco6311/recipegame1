@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>楽しく学ぶ料理ゲーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #fde047, #fbbf24);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            width: 100%;
+            max-width: 72rem;
+            margin: 1rem;
+        }
+        .card-header {
+            background: linear-gradient(to right, #4ade80, #3b82f6);
+            border-top-left-radius: 1.5rem;
+            border-top-right-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+        }
+        .card-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-content {
+            padding: 2rem;
+        }
+        h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ea580c;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-align: center;
+        }
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .input-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        input {
+            width: 90%;
+            max-width: 500px;
+            padding: 1rem;
+            font-size: 1.5rem;
+            border: 4px solid #4ade80;
+            border-radius: 0.5rem;
+        }
+        ul {
+            list-style-type: disc;
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .button {
+            background-color: #9333ea;
+            color: white;
+            font-size: 2rem;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            border: none;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+        }
+        .button:hover {
+            background-color: #7e22ce;
+            transform: scale(1.05);
+        }
+        pre {
+            white-space: pre-wrap;
+            background-color: #fef9c3;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 1.5rem;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        #praise {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #16a34a;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* メディアクエリ for larger screens */
+        @media (min-width: 768px) {
+            .card {
+                margin: 2rem;
+            }
+            .card-header {
+                padding: 2.5rem;
+            }
+            .card-title {
+                font-size: 4.5rem;
+            }
+            .card-content {
+                padding: 4rem;
+            }
+            h2 {
+                font-size: 3.75rem;
+                margin-bottom: 3rem;
+            }
+            p {
+                font-size: 2.25rem;
+                margin-bottom: 2rem;
+            }
+            input {
+                padding: 2rem;
+                font-size: 2.25rem;
+            }
+            ul {
+                padding-left: 3rem;
+                margin-bottom: 3rem;
+                font-size: 2.25rem;
+            }
+            li {
+                margin-bottom: 1rem;
+            }
+            .button {
+                font-size: 3.75rem;
+                padding: 2rem 4rem;
+                margin-bottom: 2rem;
+            }
+            pre {
+                padding: 2.5rem;
+                font-size: 2.25rem;
+                margin-bottom: 3rem;
+            }
+            #praise {
+                font-size: 3rem;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">
+                <span style="margin-right: 1rem;">👨‍🍳</span>
+                楽しく学ぶ料理ゲーム
+            </h1>
+        </div>
+        <div class="card-content" id="game-content">
+            <!-- Content will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        const recipes = [
+            {
+                name: '焼きそば',
+                ingredients: ['麺', '野菜', '肉', 'ソース'],
+                instructions: '1. 野菜と肉を炒める\n2. 麺を加えて炒める\n3. ソースを絡める'
+            },
+            {
+                name: 'オムライス',
+                ingredients: ['卵', 'ご飯', '鶏肉', '野菜', 'ケチャップ'],
+                instructions: '1. 鶏肉と野菜を炒める\n2. ご飯を加えて炒め、ケチャップで味付け\n3. 卵を溶いて薄焼き卵を作る\n4. 薄焼き卵でチキンライスを包む'
+            },
+            {
+                name: '味噌汁',
+                ingredients: ['味噌', '豆腐', 'わかめ', '長ねぎ'],
+                instructions: '1. 鍋にお湯を沸かす\n2. 具材を入れる\n3. 味噌を溶き入れる\n4. 火を止めて完成'
+            },
+            {
+                name: '野菜炒め',
+                ingredients: ['キャベツ', 'もやし', '人参', 'ピーマン', '豚肉'],
+                instructions: '1. 野菜を切る\n2. フライパンで豚肉を炒める\n3. 野菜を加えて炒める\n4. 塩コショウで味付けする'
+            },
+            {
+                name: 'スパゲティミートソース',
+                ingredients: ['スパゲティ', 'ひき肉', '玉ねぎ', 'にんにく', 'トマト缶', 'オリーブオイル'],
+                instructions: '1. スパゲティを茹でる\n2. フライパンでひき肉と玉ねぎ、にんにくを炒める\n3. トマト缶を加えて煮込む\n4. 茹でたスパゲティと絡める'
+            },
+            {
+                name: 'ハンバーグ',
+                ingredients: ['ひき肉', '玉ねぎ', 'パン粉', '卵', '牛乳', 'ケチャップ'],
+                instructions: '1. ひき肉と玉ねぎ、パン粉、卵、牛乳を混ぜる\n2. 形を整えて焼く\n3. ケチャップなどのソースをかける'
+            },
+            {
+                name: '餃子',
+                ingredients: ['ひき肉', 'キャベツ', 'ニラ', '餃子の皮', '醤油', 'ごま油'],
+                instructions: '1. キャベツとニラを細かく切る\n2. ひき肉と野菜、調味料を混ぜる\n3. 餃子の皮で包む\n4. フライパンで焼く'
+            },
+            {
+                name: '牛丼',
+                ingredients: ['牛肉', '玉ねぎ', 'ご飯', '醤油', 'みりん', '砂糖'],
+                instructions: '1. 玉ねぎを薄切りにする\n2. 牛肉を炒める\n3. 玉ねぎと調味料を加えて煮る\n4. ご飯の上にのせる'
+            },
+            {
+                name: 'カレーライス',
+                ingredients: ['肉', 'じゃがいも', 'にんじん', '玉ねぎ', 'カレールー', 'ご飯'],
+                instructions: '1. 野菜と肉を切る\n2. 野菜と肉を炒める\n3. 水を加えて煮込む\n4. カレールーを溶かし入れる\n5. ご飯と一緒に盛り付ける'
+            }
+        ];
+
+        const praises = [
+            "美味しく作れそうですね！",
+            "いいですね！センスがあります！",
+            "素晴らしい選択です！",
+            "とてもよくできました！",
+            "料理上手になりそうですね！",
+            "素敵なレシピになりそう！",
+            "こだわりを感じます！"
+        ];
+
+        let currentRecipe;
+        let userIngredients = [];
+
+        function getRandomRecipe() {
+            return recipes[Math.floor(Math.random() * recipes.length)];
+        }
+
+        function startGame() {
+            currentRecipe = getRandomRecipe();
+            userIngredients = [];
+            showIngredientsInput();
+        }
+
+        function showIngredientsInput() {
+            const content = `
+                <h2>「${currentRecipe.name}」</h2>
+                <p>材料を入力してください：</p>
+                <div class="input-container">
+                    <input type="text" id="ingredient-input" placeholder="材料を入力し、Enterを押してください">
+                </div>
+                <ul id="ingredients-list"></ul>
+                <button class="button" onclick="checkIngredients()">材料を確認</button>
+            `;
+            document.getElementById('game-content').innerHTML = content;
+            document.getElementById('ingredient-input').addEventListener('keypress', handleIngredientInput);
+        }
+
+        function handleIngredientInput(e) {
+            if (e.key === 'Enter' && e.target.value.trim() !== '') {
+                userIngredients.push(e.target.value.trim());
+                e.target.value = '';
+                updateIngredientsList();
+            }
+        }
+
+        function updateIngredientsList() {
+            const list = document.getElementById('ingredients-list');
+            list.innerHTML = userIngredients.map(ing => `<li>${ing}</li>`).join('');
+        }
+
+        function checkIngredients() {
+            const praise = praises[Math.floor(Math.random() * praises.length)];
+            const content = `
+                <h2>「${currentRecipe.name}」</h2>
+                <p id="praise">${praise}</p>
+                <p>正しい材料: ${currentRecipe.ingredients.join(', ')}</p>
+                <button class="button" onclick="showInstructions()">レシピを見る</button>
+                <button class="button" onclick="startGame()">次の料理へ</button>
+            `;
+            document.getElementById('game-content').innerHTML = content;
+        }
+
+        function showInstructions() {
+            const content = `
+                <h2>「${currentRecipe.name}」の作り方</h2>
+                <pre>${currentRecipe.instructions}</pre>
+                <button class="button" onclick="startGame()">次の料理へ</button>
+            `;
+            document.getElementById('game-content').innerHTML = content;
+        }
+
+        // Start the game when the page loads
+        window.onload = startGame;
+    </script>
+</body>
+</html>
